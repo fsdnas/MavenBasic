@@ -13,12 +13,12 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		try {
-//			mobileService.findMobileByBrand("Samsung").forEach(System.out::println);
-//		} catch (MobileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			mobileService.findMobileByBrand("Samsung").forEach(System.out::println);
+		} catch (MobileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 

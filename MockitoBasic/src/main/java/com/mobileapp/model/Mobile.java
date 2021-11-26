@@ -44,7 +44,7 @@ public class Mobile {
 		this.price = price;
 	}
 
-	public int getMobileId() {
+	public Integer getMobileId() {
 		return mobileId;
 	}
 

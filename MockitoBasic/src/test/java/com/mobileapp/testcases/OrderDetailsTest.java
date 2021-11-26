@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -20,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.mobileapp.exceptions.MobileIdNotFoundException;
 import com.mobileapp.exceptions.MobileNotFoundException;
 import com.mobileapp.model.Mobile;
 import com.mobileapp.service.IMobileService;
@@ -68,6 +70,7 @@ class OrderDetailsTest {
 	}
 
 	@Test
+	@DisplayName("checking with empty object")
 	void testShowMobiles() throws MobileNotFoundException {
 		String brand = "Samsung";
 		List<Mobile> expectedMobile = Arrays.asList(mobile3, mobile4, mobile1, mobile5);
@@ -80,6 +83,7 @@ class OrderDetailsTest {
 	}
 
 	@Test
+	@DisplayName("checking with empty object")
 	void testShowMobilesEmpty() throws MobileNotFoundException {
 		String brand = "Moto";
 
@@ -91,6 +95,7 @@ class OrderDetailsTest {
 	}
 
 	@Test
+	@DisplayName("checking with empty object")
 	void testShowMobilesNull() throws MobileNotFoundException {
 
 		String brand = "LG";
@@ -101,6 +106,7 @@ class OrderDetailsTest {
 	}
 
 	@Test
+	@DisplayName("checking with empty object")
 	void testshowMobilesInvalid() throws MobileNotFoundException {
 		Mockito.when(mobileService.findMobileByBrand("vivo")).thenThrow(MobileNotFoundException.class);
 		assertThrows(MobileNotFoundException.class, () -> orderDetails.showMobiles("vivo"));
@@ -108,6 +114,7 @@ class OrderDetailsTest {
 	}
 	
 	@Test
+	@DisplayName("checking with empty object")
 	void testShowMobilesSortByBrand() throws MobileNotFoundException {
 		String brand = "Samsung";
 		List<Mobile> expectedMobiles = Arrays.asList(mobile3, mobile4, mobile1, mobile5);
@@ -119,5 +126,43 @@ class OrderDetailsTest {
 		assertEquals(expectedMobiles, actualMobileList, "List not equal");
 	
 	}
+	
+	@Test
+	@DisplayName("checking with empty object")
+	void testOrderMobileOne() throws MobileIdNotFoundException {
+		String expected = "mobile ordered";
+		when(mobileService.findMobileById(1)).thenReturn(mobile1);
+		String actual = orderDetails.orderMobile(1);
+		assertEquals(expected, actual,"not same");
+		
+	}
 
+	
+	@Test
+	@DisplayName("checking with empty object")
+	void testOrderInvalid() throws  MobileIdNotFoundException{
+		String expected = "mobile not ordered";
+		when(mobileService.findMobileById(100)).thenReturn(null);
+		String actual = orderDetails.orderMobile(100);
+		assertEquals(expected, actual,"values are different");
+		
+	}
+	
+	@Test
+	@DisplayName("checking with empty object")
+	void testOrderException() throws  MobileIdNotFoundException{
+		String expected = "mobile not ordered";
+		when(mobileService.findMobileById(100)).thenThrow(MobileIdNotFoundException.class);
+		String actual = orderDetails.orderMobile(100);
+		assertEquals(expected, actual,"values are not same");
+	}
+	
+	@Test
+	@DisplayName("checking with empty object")
+	void testOrderEmpty() throws MobileIdNotFoundException {
+		String expected = "mobile not ordered";
+		when(mobileService.findMobileById(100)).thenReturn(new Mobile());
+		String actual = orderDetails.orderMobile(100);
+		assertEquals(expected, actual,"values are not same");
+	}
 }
